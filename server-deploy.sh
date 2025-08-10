@@ -66,7 +66,7 @@ pull_code() {
             exit 1
         fi
     else
-        git clone https://github.com/yourusername/fiora.git
+        git clone https://github.com/yinxin630/fiora.git
         if [ $? -ne 0 ]; then
             error "克隆仓库失败"
             exit 1
@@ -80,7 +80,7 @@ pull_code() {
 # 安装依赖
 install_dependencies() {
     info "安装项目依赖..."
-    npm install
+    yarn
     
     if [ $? -ne 0 ]; then
         error "依赖安装失败"
@@ -110,7 +110,7 @@ configure_environment() {
 # 构建前端
 build_frontend() {
     info "构建前端..."
-    npm run build:web
+    yarn build:web
     
     if [ $? -ne 0 ]; then
         error "前端构建失败"
@@ -134,7 +134,7 @@ start_with_pm2() {
     if [ -f "ecosystem.config.js" ]; then
         pm2 reload ecosystem.config.js
     else
-        pm2 start npm --name "fiora" -- run start
+        pm2 start yarn --name "fiora" -- start
     fi
     
     if [ $? -ne 0 ]; then

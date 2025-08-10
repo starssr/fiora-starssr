@@ -75,7 +75,7 @@ clone_repository() {
 # 安装依赖
 install_dependencies() {
     info "安装项目依赖..."
-    npm install
+    yarn
     
     if [ $? -ne 0 ]; then
         error "依赖安装失败"
@@ -105,7 +105,7 @@ configure_environment() {
 # 构建前端
 build_frontend() {
     info "构建前端..."
-    npm run build:web
+    yarn build:web
     
     if [ $? -ne 0 ]; then
         error "前端构建失败"
@@ -121,13 +121,13 @@ start_service() {
     
     # 检查是否安装了 PM2
     if command -v pm2 &> /dev/null; then
-        pm2 start npm --name "fiora" -- run start
+        pm2 start yarn --name "fiora" -- start
         success "Fiora 服务已通过 PM2 启动"
         info "可以通过以下命令查看日志："
         echo "  pm2 logs fiora"
     else
         warn "未检测到 PM2，将直接启动服务"
-        npm run start &
+        yarn start &
         success "Fiora 服务已启动"
     fi
     

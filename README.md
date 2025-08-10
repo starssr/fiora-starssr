@@ -21,14 +21,14 @@ Fiora是一个有趣的开源聊天应用。它基于[Node.js](https://nodejs.or
 1. **克隆仓库**
 
 ```bash
-git clone https://github.com/yourusername/fiora.git
+git clone https://github.com/yinxin630/fiora.git
 cd fiora
 ```
 
 2. **安装依赖**
 
 ```bash
-npm install
+yarn
 ```
 
 3. **配置环境变量**
@@ -42,13 +42,13 @@ cp .env.example .env
 4. **构建前端**
 
 ```bash
-npm run build:web
+yarn build:web
 ```
 
 5. **启动服务**
 
 ```bash
-npm run start
+yarn start
 ```
 
 ### 使用Docker部署
@@ -70,6 +70,8 @@ node get-user-id.js 用户名
 
 3. 将获取到的用户ID添加到`.env`文件的`Administrator`配置项中
 4. 重启服务
+
+注意：虽然项目使用 yarn 作为包管理器，但部分脚本工具可能使用 node 直接执行。
 
 ## 文档
 
