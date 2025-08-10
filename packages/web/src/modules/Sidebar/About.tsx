@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 
 import Dialog from '../../components/Dialog';
 import Style from './About.less';
