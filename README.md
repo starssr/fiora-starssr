@@ -2,6 +2,9 @@
 
 Fiora是一个有趣的开源聊天应用。它基于[Node.js](https://nodejs.org/)、[React](https://reactjs.org/)和[Socket.io](https://socket.io/)技术开发。
 
+#演示站点
+- [云梦小筑](https://chat.starssr.com)
+
 ## 特点
 
 - **丰富性:** Fiora包含后端、前端、Android和iOS应用
