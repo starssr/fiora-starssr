@@ -30,25 +30,6 @@ function About(props: AboutProps) {
                     </a>
                 </div>
                 <div className={Common.block}>
-                    <p className={Common.title}>隐私条款</p>
-                    <a
-                        href="/PrivacyPolicy.html"
-                        target="_black"
-                        rel="noopener noreferrer"
-                    >
-                        {`${window.location.origin}/PrivacyPolicy.html`}
-                    </a>
-                </div>
-                <div className={Common.block}>
-                    <p className={Common.title}>将fiora安装到主屏(PWA)</p>
-                    <ul>
-                        <li>
-                            点击地址栏最右边三个点按钮(或者地址栏末尾收藏前的按钮)
-                        </li>
-                        <li>选择&quot;安装 fiora&quot;</li>
-                    </ul>
-                </div>
-                <div className={Common.block}>
                     <p className={Common.title}>输入框快捷键</p>
                     <ul>
                         <li>Alt + S: 发送滑稽</li>
