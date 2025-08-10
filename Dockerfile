@@ -1,13 +1,24 @@
-FROM node:14
+FROM node:14-alpine
 
-WORKDIR /usr/app/fiora
+WORKDIR /app
 
-COPY packages ./packages
-COPY package.json tsconfig.json yarn.lock lerna.json ./
-RUN touch .env
+# 复制package.json和lerna.json
+COPY package.json lerna.json ./
 
-RUN yarn install
+# 复制所有packages目录
+COPY packages ./packages/
 
-RUN yarn build:web
+# 复制环境变量示例文件
+COPY .env.example ./.env
 
-CMD yarn start
+# 安装依赖
+RUN npm install
+
+# 构建前端
+RUN npm run build:web
+
+# 暴露端口
+EXPOSE 9200
+
+# 启动服务
+CMD ["npm", "run", "start"]

@@ -1,57 +1,93 @@
-# [Fiora](https://fiora.suisuijiang.com/) &middot; [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/yinxin630/fiora/blob/master/LICENSE) [![author](https://img.shields.io/badge/author-%E7%A2%8E%E7%A2%8E%E9%85%B1-blue.svg)](http://suisuijiang.com) [![Node.js Version](https://img.shields.io/badge/node.js-14.16.0-blue.svg)](http://nodejs.org/download) [![Test Status](https://github.com/yinxin630/fiora/workflows/Unit%20Test/badge.svg)](https://github.com/yinxin630/fiora/actions?query=workflow%3A%22Unit+Test%22) [![Typescript Status](https://github.com/yinxin630/fiora/workflows/Typescript%20Type%20Check/badge.svg)](https://github.com/yinxin630/fiora/actions?query=workflow%3A%22Typescript+Type+Check%22)
+# Fiora 聊天应用
 
+Fiora是一个有趣的开源聊天应用。它基于[Node.js](https://nodejs.org/)、[React](https://reactjs.org/)和[Socket.io](https://socket.io/)技术开发。
 
-Fiora is an interesting open source chat application. It is developed based on [node.js](https://nodejs.org/), [react](https://reactjs.org/) and [socket.io](https://socket.io/) technologies
+## 特点
 
-- **Richness:** Fiora contains backend, frontend, Android and iOS apps
-- **Cross Platform:** Fiora is developed with node.js. Supports Windows / Linux / macOS systems
-- **Open Source:** Fiora follows the MIT open source license
+- **丰富性:** Fiora包含后端、前端、Android和iOS应用
+- **跨平台:** Fiora使用Node.js开发，支持Windows/Linux/macOS系统
+- **开源:** Fiora遵循MIT开源许可证
 
-Online Example: [https://fiora.suisuijiang.com/](https://fiora.suisuijiang.com/)   
-Documentation: [https://yinxin630.github.io/fiora/](https://yinxin630.github.io/fiora/)
+## 快速开始
 
-**Other Client**   
-Vscode Extension: [https://github.com/moonrailgun/fiora-for-vscode](https://github.com/moonrailgun/fiora-for-vscode)   
+### 环境要求
 
-If you are seek for other open-source IM Application which like discord or slack, maybe try out `Tailchat`: https://tailchat.msgbyte.com/ 
+- Node.js 14.x 或更高版本
+- MongoDB 4.x 或更高版本
+- Redis 5.x 或更高版本 (可选，用于提高性能)
 
-## Features
+### 安装步骤
 
-1. Register an account and log in, it can save your data for a long time
-2. Join an existing group or create your own group to communicate with everyone
-3. Chat privately with anyone and add them as friends
-4. Multiple message types, including text / emoticons / pictures / codes / files / commands, you can also search for emoticons
-5. Push notification when you receive a new message, you can customize the notification ringtone, and it can also read the message out
-6. Choose the theme you like, and you can set it as any wallpaper and theme color you like
-7. Set up an administrator to manage users
+1. **克隆仓库**
 
-## Screenshot
+```bash
+git clone https://github.com/yourusername/fiora.git
+cd fiora
+```
 
-<img src="https://github.com/yinxin630/fiora/raw/master/packages/docs/static/img/screenshots/screenshot-pc.png" alt="PC" style="max-width:800px" />
-<img src="https://github.com/yinxin630/fiora/raw/master/packages/docs/static/img/screenshots/screenshot-phone.png" alt="Phone" height="667" style="max-height:667px" />
-<img src="https://github.com/yinxin630/fiora/raw/master/packages/docs/static/img/screenshots/screenshot-app.png" alt="App" height="896" style="max-height:896px" />
+2. **安装依赖**
 
-## Install
+```bash
+npm install
+```
 
-Fiora provides two ways to install
+3. **配置环境变量**
 
-- [Install by source code](https://yinxin630.github.io/fiora/docs/install#how-to-run)
-- [Install by docker](https://yinxin630.github.io/fiora/docs/install#running-on-the-docker)
+```bash
+cp .env.example .env
+```
 
-## Change Log
+然后编辑`.env`文件，根据需要修改配置。
 
-You can find the Fiora changelog [on the website](https://yinxin630.github.io/fiora/docs/changelog)
+4. **构建前端**
 
-## Contribution
+```bash
+npm run build:web
+```
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. Please make sure to update tests as appropriate
+5. **启动服务**
 
-1. Fork it (<https://github.com/yinxin630/fiora/fork>)
-2. Create your feature branch (`git checkout -b some-feature`)
-3. Commit your changes (`git commit -am 'Add some some features'`)
-4. Push to the branch (`git push origin some-feature`)
-5. Create a new Pull Request
+```bash
+npm run start
+```
 
-## License
+### 使用Docker部署
 
-Fiora is [MIT licensed](./LICENSE)
+1. **使用Docker Compose**
+
+```bash
+docker-compose up -d
+```
+
+## 管理员设置
+
+1. 注册一个普通账号
+2. 获取用户ID:
+
+```bash
+node get-user-id.js 用户名
+```
+
+3. 将获取到的用户ID添加到`.env`文件的`Administrator`配置项中
+4. 重启服务
+
+## 文档
+
+- [安装指南](installation-guide.md)
+- [功能修改文档](feature-modifications.md)
+- [优化方案](optimization-plan.md)
+- [项目结构](optimized-structure.md)
+
+## 脚本工具
+
+- `get-user-id.js`: 获取用户ID
+- `register-user.js`: 注册新用户
+- `deploy.sh`: 快速部署脚本
+
+## 贡献
+
+欢迎提交Pull Request。对于重大更改，请先开Issue讨论您想要更改的内容。请确保适当更新测试。
+
+## 许可证
+
+Fiora遵循[MIT许可证](./LICENSE)

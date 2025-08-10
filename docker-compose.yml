@@ -1,0 +1,38 @@
+version: '3'
+services:
+  mongodb:
+    image: mongo:4
+    container_name: fiora-mongodb
+    restart: always
+    volumes:
+      - ./data/db:/data/db
+    networks:
+      - fiora-network
+
+  redis:
+    image: redis:5
+    container_name: fiora-redis
+    restart: always
+    networks:
+      - fiora-network
+
+  fiora:
+    build: .
+    container_name: fiora
+    restart: always
+    ports:
+      - 9200:9200
+    environment:
+      - Database=mongodb://mongodb:27017/fiora
+      - RedisHost=redis
+      - RedisPort=6379
+      - Port=9200
+      - Host=0.0.0.0
+    networks:
+      - fiora-network
+    depends_on:
+      - mongodb
+      - redis
+
+networks:
+  fiora-network:
