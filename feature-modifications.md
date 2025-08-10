@@ -92,11 +92,22 @@ DisableCreateGroup=true
 
 ### 默认群组
 
-Fiora 会自动创建一个默认群组。可以通过以下命令修改默认群组名称：
+Fiora 会自动创建一个默认群组。默认群组名称在 `packages/server/src/main.ts` 文件中设置，初始值为 "fiora"。
 
-```bash
-node fiora-cli.js updateDefaultGroupName "新群组名称"
-```
+有两种方式修改默认群组名称：
+
+1. **使用脚本修改已创建的默认群组名称**：
+   ```bash
+   node update-default-group.js "新群组名称"
+   ```
+
+2. **修改源代码中的默认值**：
+   - 打开 `packages/server/src/main.ts` 文件
+   - 找到创建默认群组的代码（约在第18行）
+   - 修改 `name: 'fiora'` 为 `name: '你想要的群组名'`
+   - 重启服务器使更改生效
+
+注意：修改源代码只会影响新创建的默认群组，如果数据库中已经存在默认群组，则需要使用脚本进行修改。
 
 ## 通知系统
 
