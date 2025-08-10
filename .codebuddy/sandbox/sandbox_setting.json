@@ -1,0 +1,20 @@
+{
+  "path": "d:\\UGit\\fiora\\deploy-build",
+  "desc": "Fiora chat room with full backend API support including user registration, login, and getUserId functionality",
+  "id": "f0061d9c4eac4786987578b6aa596197",
+  "data": {
+    "spaceKey": "f0061d9c4eac4786987578b6aa596197",
+    "connections": {
+      "webIDE": "https://f0061d9c4eac4786987578b6aa596197.ap-singapore.cloudstudio.club",
+      "preview": "https://f0061d9c4eac4786987578b6aa596197--{port}.ap-singapore.cloudstudio.club",
+      "api": "https://f0061d9c4eac4786987578b6aa596197--api.ap-singapore.cloudstudio.club",
+      "pty": "https://f0061d9c4eac4786987578b6aa596197--pty.ap-singapore.cloudstudio.club"
+    }
+  },
+  "config": {
+    "api": "https://f0061d9c4eac4786987578b6aa596197--api.ap-singapore.cloudstudio.club",
+    "pty": "https://f0061d9c4eac4786987578b6aa596197--pty.ap-singapore.cloudstudio.club",
+    "region": "ap-shanghai",
+    "spaceKey": "f0061d9c4eac4786987578b6aa596197"
+  }
+}

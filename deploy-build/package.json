@@ -1,0 +1,13 @@
+{
+  "name": "fiora-deploy",
+  "version": "1.0.0",
+  "description": "Fiora chat room deployment",
+  "main": "server-full.js",
+  "dependencies": {
+    "express": "^4.18.2",
+    "uuid": "^9.0.0"
+  },
+  "scripts": {
+    "start": "node server-full.js"
+  }
+}

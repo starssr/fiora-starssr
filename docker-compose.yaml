@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:4.4
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    
+  redis:
+    image: redis:6-alpine
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+      
+  fiora:
+    build: .
+    restart: always
+    ports:
+      - "9200:9200"
+    environment:
+      - Database=mongodb://mongodb:27017/fiora
+      - RedisHost=redis
+      - RedisPort=6379
+      - NODE_ENV=production
+    depends_on:
+      - mongodb
+      - redis
+
+volumes:
+  mongodb_data:
+  redis_data:
