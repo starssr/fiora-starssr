@@ -1,89 +1,99 @@
 #!/usr/bin/env node
 
-const https = require('https');
-const http = require('http');
+/**
+ * 注册新用户
+ * 使用方法: node register-user.js 用户名 密码
+ */
 
-const FIORA_API_BASE = 'http://403a244748364c3fb4d9b62e8e953e7d.ap-singapore.myide.io/api';
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+require('dotenv').config();
 
-function makePostRequest(url, data) {
-  return new Promise((resolve, reject) => {
-    const urlObj = new URL(url);
-    const protocol = url.startsWith('https') ? https : http;
+// 连接数据库
+async function connectDatabase() {
+    const databaseUrl = process.env.Database || 'mongodb://localhost:27017/fiora';
+    console.log(`正在连接数据库: ${databaseUrl}`);
     
-    const postData = JSON.stringify(data);
-    
-    const options = {
-      hostname: urlObj.hostname,
-      port: urlObj.port,
-      path: urlObj.pathname,
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Content-Length': Buffer.byteLength(postData)
-      }
-    };
-    
-    const req = protocol.request(options, (res) => {
-      let responseData = '';
-      
-      res.on('data', (chunk) => {
-        responseData += chunk;
-      });
-      
-      res.on('end', () => {
-        try {
-          const result = JSON.parse(responseData);
-          resolve(result);
-        } catch (error) {
-          reject(new Error('Invalid JSON response'));
-        }
-      });
-    });
-    
-    req.on('error', (error) => {
-      reject(error);
-    });
-    
-    req.write(postData);
-    req.end();
-  });
-}
-
-async function registerUser(username, password) {
-  try {
-    console.log(`正在注册用户: ${username}`);
-    const url = `${FIORA_API_BASE}/register`;
-    
-    const result = await makePostRequest(url, { username, password });
-    
-    if (result.success) {
-      console.log('✅ 注册成功!');
-      console.log(`用户名: ${result.data.username}`);
-      console.log(`用户ID: ${result.data._id}`);
-      console.log(`头像: ${result.data.avatar}`);
-    } else {
-      console.log('❌ 注册失败:', result.message);
+    try {
+        await mongoose.connect(databaseUrl, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        });
+        console.log('数据库连接成功');
+    } catch (err) {
+        console.error('数据库连接失败:', err.message);
+        process.exit(1);
     }
-  } catch (error) {
-    console.log('❌ 请求错误:', error.message);
-  }
 }
 
-// 解析命令行参数
-const args = process.argv.slice(2);
+// 定义用户模型
+const UserSchema = new mongoose.Schema({
+    username: {
+        type: String,
+        unique: true,
+        index: true,
+    },
+    password: String,
+    avatar: String,
+    createTime: { type: Date, default: Date.now },
+});
 
-if (args.length < 2) {
-  console.log('用户注册工具');
-  console.log('');
-  console.log('用法:');
-  console.log('  node register-user.js <用户名> <密码>');
-  console.log('');
-  console.log('示例:');
-  console.log('  node register-user.js 云云星羽 123456');
-  process.exit(0);
+const User = mongoose.model('User', UserSchema);
+
+// 生成随机头像
+function getRandomAvatar() {
+    const avatarColors = [
+        '#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5',
+        '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4caf50',
+        '#8bc34a', '#cddc39', '#ffeb3b', '#ffc107', '#ff9800',
+        '#ff5722', '#795548', '#9e9e9e', '#607d8b'
+    ];
+    return avatarColors[Math.floor(Math.random() * avatarColors.length)];
 }
 
-const username = args[0];
-const password = args[1];
+// 主函数
+async function main() {
+    const username = process.argv[2];
+    const password = process.argv[3];
+    
+    if (!username || !password) {
+        console.error('错误: 请提供用户名和密码');
+        console.log('使用方法: node register-user.js 用户名 密码');
+        process.exit(1);
+    }
+    
+    await connectDatabase();
+    
+    try {
+        // 检查用户是否已存在
+        const existingUser = await User.findOne({ username });
+        if (existingUser) {
+            console.error(`错误: 用户 "${username}" 已存在`);
+            process.exit(1);
+        }
+        
+        // 加密密码
+        const salt = await bcrypt.genSalt(10);
+        const hash = await bcrypt.hash(password, salt);
+        
+        // 创建用户
+        const user = await User.create({
+            username,
+            password: hash,
+            avatar: getRandomAvatar()
+        });
+        
+        console.log('用户注册成功:');
+        console.log(`ID: ${user._id}`);
+        console.log(`用户名: ${user.username}`);
+        console.log(`创建时间: ${user.createTime}`);
+        console.log('\n要将此用户设为管理员，请在 .env 文件中添加或修改:');
+        console.log(`Administrator=${user._id}`);
+    } catch (err) {
+        console.error('用户注册失败:', err.message);
+    } finally {
+        mongoose.disconnect();
+    }
+}
 
-registerUser(username, password);
+main();
