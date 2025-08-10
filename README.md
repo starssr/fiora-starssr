@@ -73,10 +73,7 @@ node get-user-id.js 用户名
 
 ## 文档
 
-- [安装指南](installation-guide.md)
-- [功能修改文档](feature-modifications.md)
-- [优化方案](optimization-plan.md)
-- [项目结构](optimized-structure.md)
+- [Fiora 综合指南](fiora-综合指南.md) - 包含安装指南、功能修改、项目结构等完整文档
 
 ## 脚本工具
 
